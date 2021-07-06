@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    
+    db:
+        image: mariadb:10.4
+        restart: unless-stopped
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+        volumes: 
+            - mariadb_data:/var/lib/mysql
+
+    app:
+        build: .
+        network_mode: service:db
+        volumes: 
+            - ..:/workspace:cached
+        command: sleep infinity
+
+volumes: 
+    mariadb_data:
